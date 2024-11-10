@@ -49,7 +49,7 @@ document.getElementById("add-card-btn").addEventListener("click", function() {
   
     newCard.innerHTML = `
   <button class="text-gray-600 hover:text-gray-800 font-bold" onclick="removeCard(this)">×</button>
-  <div class="flex justify-between mb-2 items-center">
+  <div class="flex justify-between mb-2 items-center" id="card-${cardCounter}">
     <h2 class="text-xl font-bold text-gray-800 mx-auto">
     بطاقة الورد اليومي 
     </h2>
@@ -79,21 +79,26 @@ document.getElementById("add-card-btn").addEventListener("click", function() {
       <label for="${uniqueIdPrefix}-review-frequency" class="text-gray-800">تحديد مقدار المراجعة:</label>
       <select id="${uniqueIdPrefix}-review-frequency" class="text-gray-800 mt-2 border border-gray-300 rounded-md px-2 py-1 w-full sm:w-auto">
         <option> </option>
-        <option value="1">مقدار المراجعة + الحفظ التراكمي</option>
-        <option value="0.5">الحفظ التراكمي + نقص في مقدار المراجعة</option>
-        <option value="0.75">الحفظ التراكمي + تغيير مقدار المراجعة</option>
+        <option value="1">مراجعة الحفظ التراكمي + مقدار المراجعة</option>
+        <option value="0.5">مراجعة الحفظ التراكمي مع نقص في مقدار المراجعة</option>
+        <option value="0.75">مراجعة الحفظ التراكمي مع تغيير في مقدار المراجعة</option>
         <option value="0.5">مراجعة الحفظ التراكمي فقط</option>
         <option value="0.75">مراجعة مقدار المراجعة فقط</option>
-        <option value="0.25">عدم مراجعة الحفظ التراكمي + نقص مقدار المراجعة</option>
-        <option value="0.5">عدم مراجعة الحفظ التراكمي + تغيير في مقدار المراجعة</option>
-        <option value="0">عدم المراجعة</option>
+        <option value="0.25">عدم مراجعة الحفظ التراكمي مع نقص في مقدار المراجعة</option>
+        <option value="0.5">عدم مراجعة الحفظ التراكمي مع تغيير في مقدار المراجعة</option>
+        <option value="0">عدم المراجعة على الإطلاق</option>
+
       </select>
     </div>
   </div>
 </div>
 `;
+
     // Append the new card to the container
     cardContainer.appendChild(newCard);
+
+    counterForCards()
+    scrollToSection(`card-${cardCounter}`)
 
     // *************************************************************Add event listener to the memo checkbox
     const dailyMemorizationCheckbox = newCard.querySelector(`#${uniqueIdPrefix}-new-daily-memorization`);
@@ -126,11 +131,14 @@ document.getElementById("add-card-btn").addEventListener("click", function() {
     });
 });
   
-// Function to remove a card
+// **************************************************************************Function to remove a card
 function removeCard(button) {
+cardCounter = cardCounter-1
   const card = button.closest('.custom-card');
   card.remove();
+  counterForCards()
 }
+
 
 //**************************************************************************** */ Catch Up
 const catchUpCheckbox = document.querySelector(`#catch-up`);
@@ -209,49 +217,18 @@ document.querySelector('#name').innerHTML = inputName
       document.querySelector("#meet-mark").innerHTML = meet / 2;
       document.querySelector("#revision-mark").innerHTML = revisionMark / 2;
     }
+    scrollToSection("result-card")
   });
+//*************************scroll to section */
+function scrollToSection(sectionId) {
+    document.getElementById(sectionId).scrollIntoView({
+      behavior: 'smooth', 
+      block: 'start'      
+    });
+  }
   
 //*************************************************************************Copy result */
 
-/* document.getElementById('copyButton').addEventListener('click', function() {
-    const content = document.getElementById('result-card').textContent; 
-    const textArea = document.createElement('textarea'); 
-    textArea.value = content; 
-    document.body.appendChild(textArea); 
-    textArea.select(); 
-    document.execCommand('copy'); 
-    document.body.removeChild(textArea);
-  
-    // Create a message element to indicate success
-    const message = document.createElement('div');
-    message.textContent = 'تم النسخ بنجاح';
-  
-    // Apply Tailwind CSS classes for styling
-    message.classList.add(
-      'fixed', 
-      'bottom-5', 
-      'left-1/2', 
-      'transform', 
-      '-translate-x-1/2', 
-      'bg-green-500', 
-      'text-white', 
-      'px-4', 
-      'py-2', 
-      'rounded', 
-      'shadow-lg', 
-      'text-lg', 
-      'z-50'
-    );
-  
-    // Append the message to the body
-    document.body.appendChild(message);
-  
-    // Remove the message after 2 seconds
-    setTimeout(() => {
-      document.body.removeChild(message);
-    }, 2500);
-  });
-   */
   document.getElementById('copyButton').addEventListener('click', function() {
     // Get the content from the #result-card and not from the button itself
     const content = document.getElementById('result-card').textContent.trim();
@@ -314,6 +291,8 @@ document.querySelector("#clear").addEventListener('click', function(){
   catchUp = false;
   tajwid = 0;
   meet = 0;
+cardCounter = 0;
+ counterForCards()
   
   //Add initial card
     document.querySelector("#card-container").innerHTML=`
@@ -360,13 +339,17 @@ document.querySelector("#clear").addEventListener('click', function(){
                   <span class="text-gray-800" id="tajwid-mark"></span>
                 </div>
                 <button 
-    id="copyButton" 
-    class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-500">
-    Copy Content
-  </button>              
+                id="copyButton" 
+                class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-full mt-2 hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-500">
+                <ion-icon name="copy-outline"></ion-icon>
+              </button>              
               </div>
         </div>
     `
 })
+//**********************************************Counter */
+function counterForCards(){
+   document.querySelector("#counter").innerHTML= cardCounter
+}
 
 
