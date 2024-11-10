@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>حاسبة نقاط طلاب القرآن الكريم</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!--Icons-->
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<style>
+    .custom-card {
+      background-color: #f8d7dd; 
+    }
+  </style>
+</head>
+<body class="bg-gray-100" dir="rtl">
+<!--Nav-->
+<header class="bg-pink-100  shadow-lg fixed top-0 left-0  w-full z-50">
+    <nav class="flex justify-between items-center w-[92%] mx-auto">
+
+        <div>
+            <a href="/" class="flex items-center">
+                <img src="test.png" alt="Logo" class="h-20 w-auto">
+              </a>
+        </div>
+        <div class="nav-links transition-all duration-400 md:static absolute bg-pink-100   md:min-h-fit min-h-[20vh] left-0 top-[-100000%]  md:w-auto w-full flex items-center px-5">
+            <ul class="flex md:flex-row flex-col mx-auto md:items-center md:gap-[4vw] gap-8">
+                <li>
+                    <button id="add-card-btn" class=" mb-2 text-black py-3 px-5  transform  hover:scale-105 focus:outline-none  inline-flex items-center">
+                        <ion-icon name="add-outline" class="text-xl mr-2"></ion-icon> إضافة بطاقة
+                    </button> 
+                </li>
+                <li>
+                    <button id="clear" class=" mb-2 text-black py-3 px-5  transform  hover:scale-105 focus:outline-none  inline-flex items-center">
+                        <ion-icon name="close-outline" class="text-xl mr-2"></ion-icon> مسح جميع البطاقات
+                    </button>
+                </li>
+                <li>
+                    <button id="result" class=" mb-2 text-black py-3 px-5  transform  hover:scale-105 focus:outline-none  inline-flex items-center">
+                        <ion-icon name="calculator-outline" class="text-xl mr-2"></ion-icon> النتيجة 
+                    </button>
+                </li>
+                <li>
+                    <button popovertarget="modal" class=" mb-2 text-black py-3 px-5  transform  hover:scale-105 focus:outline-none  inline-flex items-center">
+                        <ion-icon name="information-outline" class="text-xl mr-2"></ion-icon> تعليمات  
+                    </button>
+                </li>
+            </ul>
+        </div>
+        <div class="flex items-center gap-6">
+            <ion-icon name="menu" onclick="onToggleMenu(this)" class="text-3xl cursor-pointer md:hidden"></ion-icon>
+        </div>
+    </nav>
+</header>
+<!---->
+<div id="quran-verse" class="fixed bottom-10  left-0 w-full bg-green-200 text-gray-800 text-center py-4 px-6 rounded-b-lg shadow-md opacity-0 transform -translate-y-full transition-all duration-500">
+    <p class="font-serif text-lg font-semibold italic">
+        <span class="block text-xl font-bold">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</span>
+        <span class="block mt-2">
+            {وَقُل رَّبِّ ارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا}
+        </span>
+        <span class="block mt-1 text-sm">سورة الإسراء (24)</span>
+    </p>
+</div>
+
+<!-- Instructions Popover -->
+<div class="bg-[#D0F0C0] p-6 rounded-lg shadow-lg text-gray-800 max-w-md mx-auto" id="modal" popover>
+    <!-- Title -->
+    <h2 class="text-xl font-semibold text-gray-900 mb-4">تعليمات مهمة</h2>
+
+    <!-- Instruction 1 -->
+    <p class="mb-4">
+         للحصول على نتيجة صحيحة، يرجى مسح جميع البطاقات من خلال الضغط على
+        <span class="text-blue-500 font-bold">مسح جميع البطاقات</span>.
+    </p>
+    
+    <!-- Instruction 2 -->
+    <p class="mb-4">
+        يتم حساب النقط الخاصة بالاستدراك بشكل منفصل عن غيرها.
+    </p>
+
+    <!-- Instruction 3 -->
+    <p class="mb-4">
+        لا يتم الضغط على 
+        <span class="text-red-500 font-bold">"x"</span> إلا بعد تفريغ البطاقة، 
+        ويرجى مسحها من جميع البيانات.
+    </p>
+
+    <!-- Instruction 4 -->
+    <p class="mb-4">
+        في حال كون المقدار المحدد للمراجعة لا يتضمن مراجعة الحفظ التراكمي،
+        يتم اعتبار الحفظ التراكمي ضمن المقدار حتى تحصل الطالبة على نقطة كاملة.
+    </p>
+
+</div>
+
+
+
+<!--Cards and result-->
+  
+  <div class="flex justify-center mt-32 my-2">
+    <div class="max-w-7xl w-full space-y-6">
+        <div class="flex flex-wrap  flex-col md:flex-row gap-4 justify-between items-start mx-auto">
+            <!-- Input -->
+            <div class="flex items-center mr-2">
+                <label for="name-input" class="text-gray-800 ">إسم الطالبة</label>
+                <input type="text" id="name-input" class="text-pink-500 mr-6">
+              </div>
+            <!-- First Checkbox -->
+            <div class="flex items-center mr-2">
+              <input type="checkbox" id="catch-up" class="text-pink-500 ml-2">
+              <label for="catch-up" class="text-gray-800 ">إستدراك</label>
+            </div>
+      
+            <!-- Second Checkbox -->
+            <div class="flex items-center mr-2">
+              <input type="checkbox" id="tajwid" class="text-pink-500 ml-2">
+              <label for="tajwid" class="text-gray-800 ">درس التجويد</label>
+            </div>
+      
+            <!-- Third Checkbox -->
+            <div class="flex items-center mr-2">
+              <input type="checkbox" id="meet" class="text-pink-500 ml-2">
+              <label for="meet" class="text-gray-800">الحصة</label>
+            </div>
+          </div>   
+          <div class="w-full h-1 bg-black"></div>
+      <!-- Card Grid Container -->
+      <div id="card-container" class=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <!-- Initial card -->
+
+        <div class="custom-card p-6 rounded-lg m-2 md:m-0 shadow-lg space-y-4" id="result-card">
+            <div class="max-w-sm w-full bg-white shadow-md rounded-lg p-6 space-y-4">
+                <!-- Card Header (Student's Info) -->
+                <div class="text-center">
+                  <h2 class="text-xl font-bold text-gray-800">تنقيط الطالبة</h2>
+                </div>
+              
+                <!-- Student Name -->
+                <div class="flex justify-between">
+                  <span class="text-gray-600 font-medium">اسم الطالبة</span>
+                  <span class="text-gray-800" id="name"></span>
+                </div>
+              
+                <!-- Memorization Point -->
+                <div class="flex justify-between">
+                  <span class="text-gray-600 font-medium">نقطة الحفظ</span>
+                  <span class="text-gray-800" id="memo-mark"></span>
+                </div>
+
+                <!-- Tafseer Lesson -->
+                <div class="flex justify-between">
+                    <span class="text-gray-600 font-medium">ورد التفسير</span>
+                    <span class="text-gray-800" id="tafssir-mark"></span>
+                  </div>
+
+                  <!-- revision -->
+                <div class="flex justify-between">
+                    <span class="text-gray-600 font-medium"> نقطة المراجعة </span>
+                    <span class="text-gray-800" id="revision-mark"></span>
+                  </div>
+              
+                <!-- Class Point -->
+                <div class="flex justify-between">
+                  <span class="text-gray-600 font-medium">الحصة</span> 
+                  <span class="text-gray-800" id="meet-mark"></span>
+                </div>
+              
+                <!-- Tajweed Lesson -->
+                <div class="flex justify-between">
+                  <span class="text-gray-600 font-medium">درس التجويد</span>
+                  <span class="text-gray-800" id="tajwid-mark"></span>
+                </div>
+                <button 
+                id="copyButton" 
+                class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-full mt-2 hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-500">
+                <ion-icon name="copy-outline"></ion-icon>
+              </button>  
+              </div>
+             
+        </div>
+
+
+    </div>
+  </div>
+  </div>
+
+<script src="main.js"></script>
+  
+
+</body>
+</html>
