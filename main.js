@@ -25,24 +25,14 @@ function onToggleMenu(e) {
     }, 3500);
 }
 
-// Arrays & var
-let dailyMemorization = []; 
-let tafssir = [];
-let partner = [];
-let revision = [];  
-let catchUp = false;
-let tajwid = 0;
-let meet = 0;
-
-
-// Add a new card
+/* // Add a new card
 let cardCounter = 0; 
 document.getElementById("add-card-btn").addEventListener("click", function() {
     const cardContainer = document.getElementById("card-container");
     cardCounter++; 
   
     const newCard = document.createElement("div");
-    newCard.classList.add("custom-card", "p-6", "rounded-lg", "shadow-lg", "space-y-4");
+    newCard.classList.add("custom-card", "student-card", "p-6", "rounded-lg", "shadow-lg", "space-y-4");
   
     // Create a unique ID prefix based on the card counter
     const uniqueIdPrefix = `card-${cardCounter}`;
@@ -55,25 +45,22 @@ document.getElementById("add-card-btn").addEventListener("click", function() {
     </h2>
 
   </div>
-  <div class="w-full h-1 bg-black"></div>
-  <!-- Checkboxes and Labels -->
-  <div class="space-y-4">
-    <!-- First checkbox with label -->
+  <div class="w-full h-1 bg-black"></div>  
+  <!-- First checkbox with label -->
     <div class="flex items-center space-x-2">
-      <input type="checkbox" id="${uniqueIdPrefix}-new-daily-memorization" class="text-pink-500">
-      <label for="${uniqueIdPrefix}-new-daily-memorization" class="text-gray-800">الحفظ الجديد اليومي</label>
-    </div>
-    <!-- Second checkbox with label -->
+      <input type="checkbox" id="${uniqueIdPrefix}-daily-memorization" value="0.5" class="text-pink-500">
+      <label for="${uniqueIdPrefix}-daily-memorization" class="text-gray-800">الحفظ الجديد اليومي</label>
+    </div> 
+  <!-- Second checkbox with label -->
     <div class="flex items-center space-x-2">
-      <input type="checkbox" id="${uniqueIdPrefix}-tafssir" class="text-pink-500">
+      <input type="checkbox" id="${uniqueIdPrefix}-tafssir" value="0.5" class="text-pink-500">
       <label for="${uniqueIdPrefix}-tafssir" class="text-gray-800">قراءة ورد التفسير كاملا</label>
-    </div>
-    <!-- Third checkbox with label -->
+    </div>   
+  <!-- Third checkbox with label -->
     <div class="flex items-center space-x-2">
       <input type="checkbox" id="${uniqueIdPrefix}-partner" class="text-pink-500">
-      <label for="${uniqueIdPrefix}-partner" class="text-gray-800">المراجعة مع الرفيقة</label>
-    </div>
-          
+      <label for="${uniqueIdPrefix}-partner" value="1" class="text-gray-800">المراجعة مع الرفيقة</label>
+    </div>    
     <!-- Dropdown Select input -->
     <div class="flex flex-col space-x-2">
       <label for="${uniqueIdPrefix}-review-frequency" class="text-gray-800">تحديد مقدار المراجعة:</label>
@@ -90,6 +77,11 @@ document.getElementById("add-card-btn").addEventListener("click", function() {
 
       </select>
     </div>
+    <!-- Catch up checkbox with label -->
+    <div class="flex items-center space-x-2">
+      <input type="checkbox" id="${uniqueIdPrefix}-catch-up" class="text-pink-500">
+      <label for="${uniqueIdPrefix}-catch-up" class="text-gray-800">  إستدراك </label>
+    </div>  
   </div>
 </div>
 `;
@@ -100,36 +92,75 @@ document.getElementById("add-card-btn").addEventListener("click", function() {
     counterForCards()
     scrollToSection(`card-${cardCounter}`)
 
-    // *************************************************************Add event listener to the memo checkbox
-    const dailyMemorizationCheckbox = newCard.querySelector(`#${uniqueIdPrefix}-new-daily-memorization`);
-    dailyMemorizationCheckbox.addEventListener("change", function() {
-      if (this.checked) {
-        dailyMemorization.push(0.5);
-      } else {
-        dailyMemorization.pop();
-      }
-    });
+}); */
+// Add a new card
+let cardCounter = 0;
+document.getElementById("add-card-btn").addEventListener("click", function() {
+    const cardContainer = document.getElementById("card-container");
+    cardCounter++; 
   
-    //************************************************************* */ Add event listener to the Tafssir checkbox
-    const tafssirCheckbox = newCard.querySelector(`#${uniqueIdPrefix}-tafssir`);
-    tafssirCheckbox.addEventListener("change", function() {
-      if (this.checked) {
-        tafssir.push(0.5);
-      } else {
-        tafssir.pop();
-      }
-    });
-  
-    //*************************************************************** */ Add event listener to the partner checkbox
-    const partnerCheckbox = newCard.querySelector(`#${uniqueIdPrefix}-partner`);
-    partnerCheckbox.addEventListener("change", function() {
-      if (this.checked) {
-        partner.push(1);
-      } else {
-        partner.pop();
-      }
-    });
+    const newCard = document.createElement("div");
+    newCard.classList.add("custom-card", "student-card", "p-6", "rounded-lg", "shadow-lg", "space-y-4");
+
+    // Create a unique ID prefix based on the card counter
+    const uniqueIdPrefix = `card-${cardCounter}`;
+
+    newCard.innerHTML = `
+      <button class="text-gray-600 hover:text-gray-800 font-bold" onclick="removeCard(this)">×</button>
+      <div class="flex justify-between mb-2 items-center" id="card-${cardCounter}">
+        <h2 class="text-xl font-bold text-gray-800 mx-auto">بطاقة الورد اليومي</h2>
+      </div>
+      <div class="w-full h-1 bg-black"></div>  
+
+      <!-- First checkbox with label -->
+      <div class="flex items-center space-x-2">
+        <input type="checkbox" id="${uniqueIdPrefix}-daily-memorization" value="0.5" class="text-pink-500">
+        <label for="${uniqueIdPrefix}-daily-memorization" class="text-gray-800">الحفظ الجديد اليومي</label>
+      </div> 
+
+      <!-- Second checkbox with label -->
+      <div class="flex items-center space-x-2">
+        <input type="checkbox" id="${uniqueIdPrefix}-tafssir" value="0.5" class="text-pink-500">
+        <label for="${uniqueIdPrefix}-tafssir" class="text-gray-800">قراءة ورد التفسير كاملا</label>
+      </div>   
+
+      <!-- Third checkbox with label -->
+      <div class="flex items-center space-x-2">
+        <input type="checkbox" id="${uniqueIdPrefix}-partner" value="1" class="text-pink-500">
+        <label for="${uniqueIdPrefix}-partner" class="text-gray-800">المراجعة مع الرفيقة</label>
+      </div>    
+
+      <!-- Dropdown Select input -->
+      <div class="flex flex-col space-x-2">
+        <label for="${uniqueIdPrefix}-review-frequency" class="text-gray-800">تحديد مقدار المراجعة:</label>
+        <select id="${uniqueIdPrefix}-review-frequency" class="text-gray-800 mt-2 border border-gray-300 rounded-md px-2 py-1 w-full sm:w-auto">
+          <option></option>
+          <option value="1">مراجعة الحفظ التراكمي + مقدار المراجعة</option>
+          <option value="0.5">مراجعة الحفظ التراكمي مع نقص في مقدار المراجعة</option>
+          <option value="0.75">مراجعة الحفظ التراكمي مع تغيير في مقدار المراجعة</option>
+          <option value="0.5">مراجعة الحفظ التراكمي فقط</option>
+          <option value="0.75">مراجعة مقدار المراجعة فقط</option>
+          <option value="0.25">عدم مراجعة الحفظ التراكمي مع نقص في مقدار المراجعة</option>
+          <option value="0.5">عدم مراجعة الحفظ التراكمي مع تغيير في مقدار المراجعة</option>
+          <option value="0">عدم المراجعة على الإطلاق</option>
+        </select>
+      </div>
+
+      <!-- Catch up checkbox with label -->
+      <div class="flex items-center space-x-2">
+        <input type="checkbox" id="${uniqueIdPrefix}-catch-up" class="text-pink-500">
+        <label for="${uniqueIdPrefix}-catch-up" class="text-gray-800">إستدراك</label>
+      </div>
+    `;
+
+    // Append the new card to the container
+    cardContainer.appendChild(newCard);
+
+    // Run additional setup if needed
+    counterForCards();
+    scrollToSection(`card-${cardCounter}`);
 });
+
   
 // **************************************************************************Function to remove a card
 function removeCard(button) {
@@ -138,28 +169,33 @@ cardCounter = cardCounter-1
   card.remove();
   counterForCards()
 }
-
-
-//**************************************************************************** */ Catch Up
-const catchUpCheckbox = document.querySelector(`#catch-up`);
-catchUpCheckbox.addEventListener("change", function() {
-  if (this.checked) {
-    catchUp = true
-  } else {
-    catchUp = false
-  }
-});
-
 // ******************************************************************************Tajwid
+let tajwid = 0;
+let meet = 0;
+let tajwidCatchUp = 0;
 const tajwidCheckbox = document.querySelector(`#tajwid`);
 tajwidCheckbox.addEventListener("change", function() {
   if (this.checked) {
     tajwid = 2
+    console.log(tajwid)
   } else {
     tajwid = 0
+    console.log(tajwid)
+
   }
 });
+const tajwidCheckboxCatchUp = document.querySelector(`#tajwid-catch-up`);
+tajwidCheckboxCatchUp.addEventListener("change", function() {
+  if (this.checked) {
+    tajwidCatchUp = 1
+    console.log(tajwidCatchUp)
 
+  } else {
+    tajwidCatchUp = 0
+    console.log(tajwidCatchUp)
+
+  }
+});
 // ******************************************************************************Meet
 const meetCheckbox = document.querySelector(`#meet`);
 meetCheckbox.addEventListener("change", function() {
@@ -169,54 +205,133 @@ meetCheckbox.addEventListener("change", function() {
     meet = 0
   }
 });
-
 // *******************************************************************************Result
 result.addEventListener("click", function() {
-    //Name
-const inputName = document.querySelector('#name-input').value
-document.querySelector('#name').innerHTML = inputName
-    // Collect the current revision value for each card
-    revision = []; 
+  var memorization =[]
+  var revision = []; 
+  var tafssir = [];
+  var partner = [];
+  var memorizationCatchUp =[]
+  var revisionCatchUp = []; 
+  var tafssirCatchUp = [];
+  var partnerCatchUp = [];
+  var catchUpSession = [];
+
+
+  var cards = document.querySelectorAll('.student-card'); // Get all cards
+  cards.forEach(card => {
+    console.log(card.querySelector('input[id$="-daily-memorization"]')); // Check if this logs each checkbox as expected
+
+    //const catchUpCard = card.querySelector('input[id$="-catch-up"]');
+    var dailyMemorization = card.querySelector('input[id$="-daily-memorization"]');    
+    var tafssirCard = card.querySelector('input[id$="-tafssir"]');   
+    var partnerStat = card.querySelector('input[id$="-partner"]');   
+    var reviewSelect = card.querySelector('select[id$="-review-frequency"]');
+    var catchUpCheckBox = card.querySelector('input[id$="-catch-up"]')
+    
+
+      //document.querySelector("#tajwid-mark").innerHTML = tajwid;
+      document.querySelector("#meet-mark").innerHTML = meet;
+     // document.querySelector("#tajwid-mark-catch-up").innerHTML = tajwidCatchUp;
+    if(catchUpCheckBox.checked){
+     // console.log(tajwidCheckBoxCatchUp)
+      //Catch up session
+      catchUpSession.push(1)
+          //Memorization
+          if (dailyMemorization.checked) {
+            var  memorizationValue = Number(dailyMemorization.value)/2
+                memorizationCatchUp.push(memorizationValue);
+            } else {
+              memorizationCatchUp.pop();
+            }
+            //Tafssir
+            if (tafssirCard.checked) {
+            var  tafssirValue = Number(tafssirCard.value)/2
+                tafssirCatchUp.push(tafssirValue);
+            } else {
+              tafssirCatchUp.pop();
+            }
+            //Partner
+            if (partnerStat.checked) {
+                partnerCatchUp.push(partnerStat.value);
+            } else {
+              partnerCatchUp.pop();
+            }
+            //Revision
+            if (reviewSelect) {
+              const reviewValue = parseFloat(reviewSelect.value)/2;
+              if (!isNaN(reviewValue)) {
+                revisionCatchUp.push(reviewValue); // Add to revision array if it's a valid number
+              }
+            }
+
+    }else{
+          //Memorization
+          if (dailyMemorization.checked) {
+            var  memorizationValue = Number(dailyMemorization.value)
+                memorization.push(memorizationValue);
+            } else {
+              memorization.pop();
+            }
+            //Tafssir
+            if (tafssirCard.checked) {
+            var  tafssirValue = Number(tafssirCard.value)
+                tafssir.push(tafssirValue);
+            } else {
+              tafssir.pop();
+            }
+            //Partner
+            if (partnerStat.checked) {
+                partner.push(partnerStat.value);
+            } else {
+              partner.pop();
+            }
+            //Revision
+            if (reviewSelect) {
+              const reviewValue = parseFloat(reviewSelect.value);
+              if (!isNaN(reviewValue)) {
+                revision.push(reviewValue); // Add to revision array if it's a valid number
+              }
+            }
+
+    }
+
+  });
   
-    const tafssirMark = tafssir.reduce((acc, curr) => acc + curr, 0);
-    const memoMark = dailyMemorization.reduce((acc, curr) => acc + curr, 0);
-    const partnerLength = partner.reduce((acc, curr) => acc + curr, 0);
-  
-    // Loop through all cards and get the review frequency values
-    const cards = document.querySelectorAll('.custom-card'); // Get all cards
-    cards.forEach(card => {
-      const reviewSelect = card.querySelector('select[id$="-review-frequency"]');
-      if (reviewSelect) {
-        const reviewValue = parseFloat(reviewSelect.value);
-        if (!isNaN(reviewValue)) {
-          revision.push(reviewValue); // Add to revision array if it's a valid number
-        }
-      }
-    });
-  
-    // Calculate sum of revision array
+    // Calculate sum 
     const revisionSum = revision.reduce((acc, curr) => acc + curr, 0);
+    const memorizationSum = memorization.reduce((acc, curr) => acc + curr, 0);
+    const tafssirSum = tafssir.reduce((acc, curr) => acc + curr, 0);
+    const revisionSumCatchUp = revisionCatchUp.reduce((acc, curr) => acc + curr, 0);
+    const memorizationSumCatchUp = memorizationCatchUp.reduce((acc, curr) => acc + curr, 0);
+    const tafssirSumCatchUp = tafssirCatchUp.reduce((acc, curr) => acc + curr, 0);
+
   
     // Adjust revisionMark based on conditions
     let revisionMark = revisionSum;
-    if (cardCounter >= 3 && partnerLength < 3 && revisionSum>0) {
-      revisionMark = revisionSum - 1; // Adjust if condition is met
+    var NormalSession = cardCounter - catchUpSession.length
+    if (NormalSession >= 3 && partner.length < 3 && revisionSum>0) {
+      revisionMark = revisionSum -1; // Adjust if condition is met
     }
-  
-    // Handle the CatchUp condition
-    if (catchUp == false) {
-      document.querySelector("#tafssir-mark").innerHTML = tafssirMark;
-      document.querySelector("#memo-mark").innerHTML = memoMark;
+    let revisionMarkCatchUp = revisionSumCatchUp;
+    if (catchUpSession.length >= 3 && partnerCatchUp.length < 3 && revisionSumCatchUp>0) {
+      revisionMarkCatchUp = revisionSumCatchUp - 0.5; // Adjust if condition is met
+    }
       document.querySelector("#tajwid-mark").innerHTML = tajwid;
+      document.querySelector("#tajwid-mark-catch-up").innerHTML = "+" + tajwidCatchUp;
       document.querySelector("#meet-mark").innerHTML = meet;
       document.querySelector("#revision-mark").innerHTML = revisionMark;
-    } else {
-      document.querySelector("#tafssir-mark").innerHTML = tafssirMark / 2;
-      document.querySelector("#memo-mark").innerHTML = memoMark / 2;
-      document.querySelector("#tajwid-mark").innerHTML = tajwid / 2;
-      document.querySelector("#meet-mark").innerHTML = meet / 2;
-      document.querySelector("#revision-mark").innerHTML = revisionMark / 2;
-    }
+      document.querySelector("#memo-mark").innerHTML = memorizationSum;
+      document.querySelector("#tafssir-mark").innerHTML = tafssirSum;
+      document.querySelector("#revision-mark-catch-up").innerHTML = "+" + revisionMarkCatchUp;
+      document.querySelector("#memo-mark-catch-up").innerHTML = "+" +  memorizationSumCatchUp;
+      document.querySelector("#tafssir-mark-catch-up").innerHTML = "+" +  tafssirSumCatchUp;
+      document.querySelector("#tajwid-mark").innerHTML = tajwid;
+      document.querySelector("#tajwid-mark-catch-up").innerHTML = tajwidCatchUp;
+      document.querySelector("#meet-mark").innerHTML = meet;
+
+
+
     scrollToSection("result-card")
   });
 //*************************scroll to section */
@@ -296,7 +411,7 @@ cardCounter = 0;
   
   //Add initial card
     document.querySelector("#card-container").innerHTML=`
-        <div class="custom-card p-6 rounded-lg m-2 md:m-0 shadow-lg space-y-4" id="result-card">
+ <div class="custom-card p-6 rounded-lg m-2 md:m-0 shadow-lg space-y-4" id="result-card">
             <div class="max-w-sm w-full bg-white shadow-md rounded-lg p-6 space-y-4">
                 <!-- Card Header (Student's Info) -->
                 <div class="text-center">
@@ -313,37 +428,46 @@ cardCounter = 0;
                 <div class="flex justify-between">
                   <span class="text-gray-600 font-medium">نقطة الحفظ</span>
                   <span class="text-gray-800" id="memo-mark"></span>
+                  <span class="text-gray-800" id="memo-mark-catch-up"></span>
+
                 </div>
 
                 <!-- Tafseer Lesson -->
                 <div class="flex justify-between">
                     <span class="text-gray-600 font-medium">ورد التفسير</span>
                     <span class="text-gray-800" id="tafssir-mark"></span>
+                    <span class="text-gray-800" id="tafssir-mark-catch-up"></span>
+
                   </div>
 
                   <!-- revision -->
                 <div class="flex justify-between">
                     <span class="text-gray-600 font-medium"> نقطة المراجعة </span>
                     <span class="text-gray-800" id="revision-mark"></span>
+                    <span class="text-gray-800" id="revision-mark-catch-up"></span>
                   </div>
               
                 <!-- Class Point -->
                 <div class="flex justify-between">
                   <span class="text-gray-600 font-medium">الحصة</span> 
                   <span class="text-gray-800" id="meet-mark"></span>
+
                 </div>
               
                 <!-- Tajweed Lesson -->
                 <div class="flex justify-between">
                   <span class="text-gray-600 font-medium">درس التجويد</span>
                   <span class="text-gray-800" id="tajwid-mark"></span>
+                  <span class="text-gray-800" id="tajwid-mark-catch-up"></span>
+
                 </div>
                 <button 
                 id="copyButton" 
                 class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-full mt-2 hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-500">
                 <ion-icon name="copy-outline"></ion-icon>
-              </button>              
+              </button>  
               </div>
+             
         </div>
     `
 })
