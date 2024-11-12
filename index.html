@@ -68,32 +68,46 @@
     <span class="text-blue-500 font-bold" id="counter"> </span>.
 
 </div>
+
 <!-- Instructions Popover -->
 <div class="bg-[#D0F0C0] p-6 rounded-lg shadow-lg text-gray-800 max-w-md mx-auto" id="modal" popover>
-    <!-- Title -->
-    <h2 class="text-xl font-semibold text-gray-900 mb-4">تعليمات مهمة</h2>
+  <!-- Title -->
+  <h2 class="text-xl font-semibold text-gray-900 mb-4">تعليمات مهمة</h2>
 
-    <!-- Instruction 1 -->
+  <!-- Instruction 1 -->
+  <p class="mb-4">
+      هذا البرنامج يحاكي عملية حساب نقاط الطالبات المشاركات في مبادرة لحفظ القرآن الكريم.
+  </p>
 
-    
-    <!-- Instruction 2 -->
-    <p class="mb-4">
-        يتم حساب النقط الخاصة بالاستدراك بشكل منفصل عن غيرها.
-    </p>
+  <!-- Instruction 2: Scoring Details -->
+  <p class="mb-4">معايير احتساب النقاط:</p>
+  <ul class="list-disc ml-6 mb-4">
+      <li>الحفظ اليومي: 0.5 نقطة</li>
+      <li>ورد التفسير: 0.5 نقطة</li>
+      <li>الحضور في الحصة: 2 نقاط</li>
+      <li>درس التجويد: 2 نقاط</li>
+      <li>المراجعة اليومية: 1 نقطة</li>
+  </ul>
 
-    <!-- Instruction 3 -->
-    <p class="mb-4">
-        لا يتم الضغط على 
-        <span class="text-red-500 font-bold">"x"</span> إلا بعد تفريغ البطاقة، 
-        ويرجى مسحها من جميع البيانات.
-    </p>
+  <!-- Instruction 3: Adjustments for Make-Up Sessions -->
+  <p class="mb-4">
+      في حالة تعويض جلسة، يتم احتساب نصف النقطة.
+  </p>
 
-    <!-- Instruction 4 -->
-    <p class="mb-4">
-        في حال كون المقدار المحدد للمراجعة لا يتضمن مراجعة الحفظ التراكمي،
-        يتم اعتبار الحفظ التراكمي ضمن المقدار حتى تحصل الطالبة على نقطة كاملة.
-    </p>
+  <!-- Instruction 4: Deductions in Review Score -->
+  <p class="mb-4">
+      حالات يتم فيها الخصم من نقطة المراجعة:
+  </p>
+  <ul class="list-disc ml-6 mb-4">
+      <li>نقص في المقدار المحدد للمراجعة</li>
+      <li>تغيير المقدار المحدد للمراجعة</li>
+      <li>إذا كانت الطالبة تراجع مع زميلة أقل من 3 مرات في الأسبوع</li>
+  </ul>
 
+  <!-- Instruction 5: Cumulative Memorization -->
+  <p class="mb-4">
+      في حال عدم تضمين مراجعة الحفظ التراكمي في المقدار المحدد، يُعتبر الحفظ التراكمي ضمن المقدار حتى تحصل الطالبة على النقطة الكاملة.
+  </p>
 </div>
 
 
@@ -108,16 +122,15 @@
                 <label for="name-input" class="text-gray-800 ">إسم الطالبة</label>
                 <input type="text" id="name-input" class="text-pink-500 mr-6">
               </div>
-            <!-- First Checkbox -->
-            <div class="flex items-center mr-2">
-              <input type="checkbox" id="catch-up" class="text-pink-500 ml-2">
-              <label for="catch-up" class="text-gray-800 ">إستدراك</label>
-            </div>
       
             <!-- Second Checkbox -->
             <div class="flex items-center mr-2">
-              <input type="checkbox" id="tajwid" class="text-pink-500 ml-2">
-              <label for="tajwid" class="text-gray-800 ">درس التجويد</label>
+              <input type="checkbox" id="tajwid" value="2" class="text-pink-500 ml-2">
+              <label for="tajwid" class="text-gray-800 ">مشاهدت درس التجويد </label>
+            </div>
+            <div class="flex items-center mr-2">
+              <input type="checkbox" id="tajwid-catch-up" value="1" class="text-pink-500 ml-2">
+              <label for="tajwid-catch-up" class="text-gray-800 ">إستدراك درس التجويد </label>
             </div>
       
             <!-- Third Checkbox -->
@@ -148,30 +161,38 @@
                 <div class="flex justify-between">
                   <span class="text-gray-600 font-medium">نقطة الحفظ</span>
                   <span class="text-gray-800" id="memo-mark"></span>
+                  <span class="text-gray-800" id="memo-mark-catch-up"></span>
+
                 </div>
 
                 <!-- Tafseer Lesson -->
                 <div class="flex justify-between">
                     <span class="text-gray-600 font-medium">ورد التفسير</span>
                     <span class="text-gray-800" id="tafssir-mark"></span>
+                    <span class="text-gray-800" id="tafssir-mark-catch-up"></span>
+
                   </div>
 
                   <!-- revision -->
                 <div class="flex justify-between">
                     <span class="text-gray-600 font-medium"> نقطة المراجعة </span>
                     <span class="text-gray-800" id="revision-mark"></span>
+                    <span class="text-gray-800" id="revision-mark-catch-up"></span>
                   </div>
               
                 <!-- Class Point -->
                 <div class="flex justify-between">
                   <span class="text-gray-600 font-medium">الحصة</span> 
                   <span class="text-gray-800" id="meet-mark"></span>
+
                 </div>
               
                 <!-- Tajweed Lesson -->
                 <div class="flex justify-between">
                   <span class="text-gray-600 font-medium">درس التجويد</span>
                   <span class="text-gray-800" id="tajwid-mark"></span>
+                  <span class="text-gray-800" id="tajwid-mark-catch-up"></span>
+
                 </div>
                 <button 
                 id="copyButton" 
