@@ -188,6 +188,9 @@ img {
     color: #d53f8c; /* Pink text */
     margin-right: 1.5rem;
   }
+  .meet-input{
+    width: 3rem;
+  }
   
   .checkbox-input {
     color: #d53f8c; /* Pink text */
