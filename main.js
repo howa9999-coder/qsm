@@ -107,7 +107,7 @@ function scrollToSection(sectionId) {
 }
 // ******************************************************************************Tajwid
 var tajwid = 0;
-var meet = 0;
+//var meet = 0;
 var tajwidCatchUp = 0;
 const tajwidCheckbox = document.querySelector(`#tajwid`);
 tajwidCheckbox.addEventListener("change", function() {
@@ -132,18 +132,7 @@ tajwidCheckboxCatchUp.addEventListener("change", function() {
 
   }
 });
-// ******************************************************************************Meet
-const meetCheckbox = document.querySelector(`#meet`);
-meetCheckbox.addEventListener("change", function() {
-  if (this.checked) {
-    meet = 2
-    console.log(meet)
-  } else {
-    meet = 0
-    console.log(meet)
 
-  }
-});
 // *******************************************************************************Result
 result.addEventListener("click", function () {
   // Arrays to store data
@@ -156,6 +145,7 @@ result.addEventListener("click", function () {
   const tafssirCatchUp = [];
   const partnerCatchUp = [];
   const catchUpSession = [];
+  const meet = null
 
   // Query all student cards
   const cards = document.querySelectorAll(".student-card");
@@ -165,8 +155,7 @@ result.addEventListener("click", function () {
 
 
     // Query select inputs
-   const catchUpCheckBox = card.querySelector('input[id$="-catch-up"]')
-
+    const catchUpCheckBox = card.querySelector('input[id$="-catch-up"]')
     const memoSelect = card.querySelector('select[id$="-daily-memorization"]');
     const tafssirSelect = card.querySelector('select[id$="-tafssir"]');
     const partnerSelect = card.querySelector('select[id$="-partner"]');
@@ -209,6 +198,7 @@ let revisionMarkCatchUp = revisionSumCatchUp;
 if (catchUpSession.length >= 3 && partnerSumCatchUp < 3 && revisionSumCatchUp>0) {
   revisionMarkCatchUp = revisionSumCatchUp - 0.5; // Adjust if condition is met
 }
+//Result
   document.querySelector("#name").innerHTML = document.querySelector("#name-input").value;
   document.querySelector("#tajwid-mark").innerHTML = tajwid;
   document.querySelector("#tajwid-mark-catch-up").innerHTML = "+" + tajwidCatchUp;
@@ -221,7 +211,7 @@ if (catchUpSession.length >= 3 && partnerSumCatchUp < 3 && revisionSumCatchUp>0)
   document.querySelector("#tafssir-mark-catch-up").innerHTML = "+" +  tafssirSumCatchUp;
   document.querySelector("#tajwid-mark").innerHTML = tajwid;
   document.querySelector("#tajwid-mark-catch-up").innerHTML = tajwidCatchUp;
-  document.querySelector("#meet-mark").innerHTML = meet;
+  document.querySelector("#meet-mark").innerHTML = document.querySelector("#meet").value * 2;
 
 
   // Scroll to result section
@@ -238,13 +228,10 @@ function valuePushed(selectInput, divisionFactor, targetArray) {
   }
 }
 
-
-
-
-
 //************************************************************************CLEAR */
 document.querySelector("#clear").addEventListener('click', function(){
-counterForCards()
+  cardCounter = 0
+  counterForCards()
 
 //Add initial card
   document.querySelector("#card-container").innerHTML=`
@@ -308,44 +295,18 @@ counterForCards()
                  
             </div>
   `
- 
-document.getElementById('copyButton').addEventListener('click', function() {
-  const content = document.getElementById('result-card').textContent.trim();
-
-  // Clean up the content:
-  const cleanedContent = content
-      .split('\n') 
-      .map(line => line.trim()) 
-      .filter(line => line.length > 0) 
-      .join('\n'); 
-
-  const textArea = document.createElement('textarea'); 
-  textArea.value = cleanedContent; 
-  document.body.appendChild(textArea); 
-  textArea.select(); 
-  document.execCommand('copy'); 
-  document.body.removeChild(textArea);
-
-  // Create a message element to indicate success
-  const message = document.createElement('div');
-  message.textContent = 'تم النسخ بنجاح';
-
-
-  message.classList.add("copy");
-
-  // Append the message to the body
-  document.body.appendChild(message);
-
-  // Remove the message after 2.5 seconds
-  setTimeout(() => {
-    document.body.removeChild(message);
-  }, 2500);
-});
+ //COPY RESULT
+  document.getElementById('copyButton').addEventListener('click', function() {
+    copyResult()
+   });
 })
 //*************************************************************************Copy result */
 
 document.getElementById('copyButton').addEventListener('click', function() {
-  const content = document.getElementById('result-card').textContent.trim();
+ copyResult()
+});
+//**************************************************************************Copy function */
+function copyResult(){const content = document.getElementById('result-card').textContent.trim();
 
   // Clean up the content:
   const cleanedContent = content
@@ -353,29 +314,28 @@ document.getElementById('copyButton').addEventListener('click', function() {
       .map(line => line.trim()) 
       .filter(line => line.length > 0) 
       .join('\n'); 
-
+  
   const textArea = document.createElement('textarea'); 
   textArea.value = cleanedContent; 
   document.body.appendChild(textArea); 
   textArea.select(); 
   document.execCommand('copy'); 
   document.body.removeChild(textArea);
-
+  
   // Create a message element to indicate success
   const message = document.createElement('div');
   message.textContent = 'تم النسخ بنجاح';
-
-
+  
+  
   message.classList.add("copy");
-
+  
   // Append the message to the body
   document.body.appendChild(message);
-
+  
   // Remove the message after 2.5 seconds
   setTimeout(() => {
     document.body.removeChild(message);
-  }, 2500);
-});
+  }, 2500);}
 //**********************************************Counter */
 function counterForCards(){
  document.querySelector("#counter").innerHTML= cardCounter
