@@ -51,9 +51,8 @@
     </nav>
 </header>
 <!--==================={cardcounter}=============-->
-<!--Card counter-->
-<div  style="font-size: large ;position: fixed; bottom: 5%; left: 10%; z-index:1000000;"> عدد البطاقات: 
-  <span class="text-blue-500 font-bold" style="color: blue; font-size: larger;" id="counter"> </span>.
+<div style="font-size: large ; position: fixed; bottom: 5%; left: 10%; z-index:1000000;"> عدد البطاقات: 
+  <span  style="color: blue; font-size: larger;" id="counter"> </span>.
 
 </div>
 <!--==================={Instructions}=============-->
@@ -76,7 +75,7 @@
       <li>المراجعة اليومية: 1 نقطة</li>
   </ul>
 
-  <!-- Instruction 3: Adjustments for Make-Up Sessions -->
+  <!-- Instruction 3: Adjustments for catch-Up Sessions -->
   <p style=" margin-bottom: 1rem;">
       في حالة تعويض جلسة، يتم احتساب نصف النقطة.
   </p>
@@ -101,13 +100,16 @@
 <div class="outer-container">
     <div class="inner-container">
         <div class="check-nav">
-                        <!-- Input -->
+                        <!-- Inputs -->
                         <div class="input-container">
                             <label for="name-input" class="input-label ">إسم الطالبة</label>
                             <input type="text" id="name-input" class="input-field">
                           </div>
-                  
-                        <!-- Second Checkbox -->
+                          <div class="input-container">
+                            <label for="meet"class="input-label ">عدد الحصص </label>
+                            <input type="number" id="meet" class="input-field meet-input">
+  
+                          </div>
                         <div class="input-container">
                           <input type="checkbox" id="tajwid" value="2" class="checkbox-input">
                           <label for="tajwid" class="input-label ">مشاهدة درس التجويد </label>
@@ -117,11 +119,7 @@
                           <label for="tajwid-catch-up" class="text-gray-800 ">إستدراك درس التجويد </label>
                         </div>
                   
-                        <!-- Third Checkbox -->
-                        <div class="input-container">
-                          <input type="checkbox" id="meet" class="checkbox-input">
-                          <label for="meet"class="input-label ">الحصة</label>
-                        </div>
+                        
         </div>
         <div class="div-line"></div>
         <!--Card grid contaioner-->
@@ -140,7 +138,7 @@
                       <span class="mark" id="name"></span>
                     </div>
                   
-                    <!-- Memorization Point -->
+                    <!-- Memorization  -->
                     <div class="title-container">
                       <span class="title">نقطة الحفظ</span>
                       <span class="mark" id="memo-mark"></span>
@@ -148,7 +146,7 @@
     
                     </div>
     
-                    <!-- Tafseer Lesson -->
+                    <!-- Tafseer  -->
                     <div class="title-container">
                         <span class="title">ورد التفسير</span>
                         <span class="mark" id="tafssir-mark"></span>
@@ -163,14 +161,14 @@
                         <span class="mark" id="revision-mark-catch-up"></span>
                       </div>
                   
-                    <!-- Class Point -->
+                    <!-- Class  -->
                     <div class="title-container">
                       <span class="title">الحصة</span> 
                       <span class="mark" id="meet-mark"></span>
     
                     </div>
                   
-                    <!-- Tajweed Lesson -->
+                    <!-- Tajweed  -->
                     <div class="title-container">
                       <span class="title">درس التجويد</span>
                       <span class="mark" id="tajwid-mark"></span>
@@ -182,12 +180,9 @@
                     class="copy-btn">
                     <ion-icon name="copy-outline"></ion-icon>
                   </button>  
-                  </div>
-                 
+                  </div>     
             </div>
-            
         </div>
-
     </div>
 </div>
 
