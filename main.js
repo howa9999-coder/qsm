@@ -31,7 +31,7 @@ document.getElementById("add-card").addEventListener("click", function() {
   </div>
   <div class="div-line"></div>  
 
-  <!-- First checkbox with label -->
+  <!-- Memorization -->
   <div class="select-container">
     <label for="${uniqueIdPrefix}-daily-memorization" >حفظ الورد اليومي:</label>
     <select id="${uniqueIdPrefix}-daily-memorization" class="select">
@@ -41,7 +41,7 @@ document.getElementById("add-card").addEventListener("click", function() {
     </select>
   </div>
 
-  <!-- Second checkbox with label -->
+  <!-- Tafssir -->
   <div class="select-container">
     <label for="${uniqueIdPrefix}-tafssir" > قراءة ورد التفسير   :</label>
     <select id="${uniqueIdPrefix}-tafssir" class="select">
@@ -51,7 +51,7 @@ document.getElementById("add-card").addEventListener("click", function() {
     </select>
   </div>
 
-  <!-- Third checkbox with label -->
+  <!-- Partner -->
   <div class="select-container">
     <label for="${uniqueIdPrefix}-partner" >مراجعة مع رفيقة  :</label>
     <select id="${uniqueIdPrefix}-partner" class="select">
@@ -239,53 +239,11 @@ function valuePushed(selectInput, divisionFactor, targetArray) {
 }
 
 
-//*************************************************************************Copy result */
 
-document.getElementById('copyButton').addEventListener('click', function() {
-  const content = document.getElementById('result-card').textContent.trim();
-
-  // Clean up the content:
-  const cleanedContent = content
-      .split('\n') // Split by newlines
-      .map(line => line.trim()) // Trim each line
-      .filter(line => line.length > 0) // Remove empty lines
-      .join('\n'); // Join back with single newlines between sections
-
-  const textArea = document.createElement('textarea'); 
-  textArea.value = cleanedContent; 
-  document.body.appendChild(textArea); 
-  textArea.select(); 
-  document.execCommand('copy'); 
-  document.body.removeChild(textArea);
-
-  // Create a message element to indicate success
-  const message = document.createElement('div');
-  message.textContent = 'تم النسخ بنجاح';
-
-  // Apply Tailwind CSS classes for styling
-  message.classList.add("copy");
-
-  // Append the message to the body
-  document.body.appendChild(message);
-
-  // Remove the message after 2 seconds
-  setTimeout(() => {
-    document.body.removeChild(message);
-  }, 2500);
-});
 
 
 //************************************************************************CLEAR */
 document.querySelector("#clear").addEventListener('click', function(){
-  // Set up variables to default
-dailyMemorization = []; 
-tafssir = [];
-partner = [];
-revision = []; 
-catchUp = false;
-tajwid = 0;
-meet = 0;
-cardCounter = 0;
 counterForCards()
 
 //Add initial card
@@ -304,7 +262,7 @@ counterForCards()
                       <span class="mark" id="name"></span>
                     </div>
                   
-                    <!-- Memorization Point -->
+                    <!-- Memorization  -->
                     <div class="title-container">
                       <span class="title">نقطة الحفظ</span>
                       <span class="mark" id="memo-mark"></span>
@@ -312,7 +270,7 @@ counterForCards()
     
                     </div>
     
-                    <!-- Tafseer Lesson -->
+                    <!-- Tafseer  -->
                     <div class="title-container">
                         <span class="title">ورد التفسير</span>
                         <span class="mark" id="tafssir-mark"></span>
@@ -327,51 +285,100 @@ counterForCards()
                         <span class="mark" id="revision-mark-catch-up"></span>
                       </div>
                   
-                    <!-- Class Point -->
+                    <!-- Class -->
                     <div class="title-container">
                       <span class="title">الحصة</span> 
                       <span class="mark" id="meet-mark"></span>
     
                     </div>
                   
-                    <!-- Tajweed Lesson -->
+                    <!-- Tajweed -->
                     <div class="title-container">
                       <span class="title">درس التجويد</span>
                       <span class="mark" id="tajwid-mark"></span>
                       <span class="mark" id="tajwid-mark-catch-up"></span>
     
                     </div>
-                    <button 
+                     <button 
                     id="copyButton" 
                     class="copy-btn">
                     <ion-icon name="copy-outline"></ion-icon>
-                  </button>  
+                  </button>
                   </div>
                  
             </div>
   `
+ 
+document.getElementById('copyButton').addEventListener('click', function() {
+  const content = document.getElementById('result-card').textContent.trim();
+
+  // Clean up the content:
+  const cleanedContent = content
+      .split('\n') 
+      .map(line => line.trim()) 
+      .filter(line => line.length > 0) 
+      .join('\n'); 
+
+  const textArea = document.createElement('textarea'); 
+  textArea.value = cleanedContent; 
+  document.body.appendChild(textArea); 
+  textArea.select(); 
+  document.execCommand('copy'); 
+  document.body.removeChild(textArea);
+
+  // Create a message element to indicate success
+  const message = document.createElement('div');
+  message.textContent = 'تم النسخ بنجاح';
+
+
+  message.classList.add("copy");
+
+  // Append the message to the body
+  document.body.appendChild(message);
+
+  // Remove the message after 2.5 seconds
+  setTimeout(() => {
+    document.body.removeChild(message);
+  }, 2500);
+});
 })
+//*************************************************************************Copy result */
+
+document.getElementById('copyButton').addEventListener('click', function() {
+  const content = document.getElementById('result-card').textContent.trim();
+
+  // Clean up the content:
+  const cleanedContent = content
+      .split('\n') 
+      .map(line => line.trim()) 
+      .filter(line => line.length > 0) 
+      .join('\n'); 
+
+  const textArea = document.createElement('textarea'); 
+  textArea.value = cleanedContent; 
+  document.body.appendChild(textArea); 
+  textArea.select(); 
+  document.execCommand('copy'); 
+  document.body.removeChild(textArea);
+
+  // Create a message element to indicate success
+  const message = document.createElement('div');
+  message.textContent = 'تم النسخ بنجاح';
+
+
+  message.classList.add("copy");
+
+  // Append the message to the body
+  document.body.appendChild(message);
+
+  // Remove the message after 2.5 seconds
+  setTimeout(() => {
+    document.body.removeChild(message);
+  }, 2500);
+});
 //**********************************************Counter */
 function counterForCards(){
  document.querySelector("#counter").innerHTML= cardCounter
 }
 
 
-/*
-  cards.forEach(card => {
-    var dailyMemorization = card.querySelector('input[id$="-daily-memorization"]');   
-    var noDailyMemorization = card.querySelector('input[id$="-daily-memorization-no"]');    
-
-    var catchUpCheckBox = card.querySelector('input[id$="-catch-up"]')
-
-      document.querySelector("#tajwid-mark").innerHTML = tajwid;
-      document.querySelector("#tajwid-mark-catch-up").innerHTML = "+" + tajwidCatchUp;
-      document.querySelector("#meet-mark").innerHTML = meet;
-      memoCatchUp.push(0.5)
-      console.log(memoCatchUp)
-
-
-        
-arrayDisplayed(catchUpCheckBox.checked, memoValue, memorization, memoCatchUp )
-
-  })*/ 
